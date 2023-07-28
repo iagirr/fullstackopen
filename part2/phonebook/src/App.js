@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import InputName from './components/InputName';
 import InputTfn from './components/InputTfn';
 import Listin from './components/Listín';
@@ -11,6 +12,13 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newTfn, setNewTfn] = useState('');
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then((response) => {
+      console.log('promesa cumprida');
+      setPersons(response.data);
+    });
+  }, []);
 
   const handleInputName = (event) => {
     setNewName(event.target.value);
