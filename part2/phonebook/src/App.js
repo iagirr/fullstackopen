@@ -3,7 +3,10 @@ import InputName from './components/InputName';
 import InputTfn from './components/InputTfn';
 import Listin from './components/Listín';
 import Filtro from './components/Filtro';
+import SuccessNot from './components/SuccessNot';
+import ErrorNot from './components/ErrorNot';
 import api from './components/api';
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -12,6 +15,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newTfn, setNewTfn] = useState('');
   const [filter, setFilter] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     api
@@ -52,6 +57,7 @@ const App = () => {
       window.alert(
         `Síntoo, ${newName} co teléfono ${newTfn} xa está no listín`
       );
+      setErrorMessage('Inténtao de novo con outra combinación de nome-número')
       return;
     }
 
@@ -66,6 +72,10 @@ const App = () => {
         setPersons([...persons, addedPerson]);
         setNewName('');
         setNewTfn('');
+        setSuccessMessage(`Engadido ${addedPerson.name} co número ${addedPerson.tfn}`);
+        setTimeout(() => {
+          setSuccessMessage('')
+        }, 4000)
       })
       .catch((err) => {
         console.log(`Erro ao engadir á persoa: ${err.message}`);
@@ -108,6 +118,8 @@ const App = () => {
       </form>
       <h2>Listín</h2>
       <Listin persons={filterPersons} onDelete={deletePerson} />
+      <SuccessNot message={successMessage}/>
+      <ErrorNot message={errorMessage}/>
     </>
   );
 };
