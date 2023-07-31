@@ -58,6 +58,9 @@ const App = () => {
         `Síntoo, ${newName} co teléfono ${newTfn} xa está no listín`
       );
       setErrorMessage('Inténtao de novo con outra combinación de nome-número')
+      setTimeout(() => {
+        setErrorMessage('')
+        }, 4000)
       return;
     }
 
