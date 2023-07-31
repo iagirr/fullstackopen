@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import InputName from './components/InputName';
 import InputTfn from './components/InputTfn';
 import Listin from './components/Listín';
 import Filtro from './components/Filtro';
+import api from './components/api';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,10 +14,15 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then((response) => {
-      console.log('promesa cumprida');
-      setPersons(response.data);
-    });
+    api
+      .getAllPersons()
+      .then((data) => {
+        console.log('promesa satisfeita');
+        setPersons(data);
+      })
+      .catch((err) => {
+        console.log(`Erro ao obter persoas: ${err}`);
+      });
   }, []);
 
   const handleInputName = (event) => {
@@ -41,7 +46,7 @@ const App = () => {
     }
 
     const isDuplicate = persons.some(
-      (person) => person.name === newName || person.tfn === newTfn
+      (person) => person.name === newName && person.tfn === newTfn
     );
     if (isDuplicate) {
       window.alert(
@@ -50,11 +55,37 @@ const App = () => {
       return;
     }
 
-    console.log('Botón clicado', event.target);
     const newPerson = { name: newName, tfn: newTfn };
-    setPersons([...persons, newPerson]);
-    setNewName('');
-    setNewTfn('');
+
+    api
+      .addPerson(newPerson)
+      .then((addedPerson) => {
+        console.log(
+          `Engadido ${addedPerson.name} co número ${addedPerson.tfn}`
+        );
+        setPersons([...persons, addedPerson]);
+        setNewName('');
+        setNewTfn('');
+      })
+      .catch((err) => {
+        console.log(`Erro ao engadir á persoa: ${err.message}`);
+      });
+  };
+
+  const deletePerson = (id) => {
+    const confirmDelete = window.confirm(
+      'Estás seguro de que queres eliminar este contacto?'
+    );
+
+    if (confirmDelete) {
+      api
+        .deletePerson(id)
+        .then(() => {
+          console.log(`Persoa con ID ${id} eliminada`);
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const filterPersons = persons.filter((person) =>
@@ -76,7 +107,7 @@ const App = () => {
         </div>
       </form>
       <h2>Listín</h2>
-      <Listin persons={filterPersons} />
+      <Listin persons={filterPersons} onDelete={deletePerson} />
     </>
   );
 };
