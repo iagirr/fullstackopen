@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 let persons = require('./phonebook');
 
 app.use(express.json());
+
+morgan.token('postData', (req) => JSON.stringify(req.body));
+app.use(
+  morgan(
+    ':method :url :status :res[content-length] - :response-time ms :postData'
+  )
+);
 
 app.get('/', (req, res) => {
   res.send('<h2>Ola mundo!</h2>');
