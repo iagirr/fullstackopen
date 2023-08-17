@@ -4,7 +4,8 @@
   "description": "Base datos con typescript",
   "main": "index.ts",
   "scripts": {
-    "calculaBmi": "ts-node bmiCalculator.ts"
+    "calculateBMI": "ts-node exercises/bmiCalculator.ts",
+    "calculateExercises": "ts-node exercises/exerciseCalculator.ts"
   },
   "author": "Iago Sánchez Vázquez",
   "license": "ISC",

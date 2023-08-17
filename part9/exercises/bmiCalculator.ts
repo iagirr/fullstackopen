@@ -1,4 +1,4 @@
-const calculaBMI = (alturaCm: number, pesoKg: number): string => {
+const calculateBMI = (alturaCm: number, pesoKg: number): string => {
   const alturaM = alturaCm / 100;
   const bmi = pesoKg / alturaM ** 2;
   const bmiRedondeado = bmi.toFixed(2);
@@ -14,4 +14,7 @@ const calculaBMI = (alturaCm: number, pesoKg: number): string => {
   }
 };
 
-console.log(calculaBMI(178, 74));
+const alturaCm = Number(process.argv[2]);
+const pesoKg = Number(process.argv[3]);
+
+console.log(calculateBMI(alturaCm, pesoKg));
