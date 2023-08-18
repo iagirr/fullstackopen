@@ -8,7 +8,10 @@ interface Result {
   average: number;
 }
 
-const calculateExercise = (exerciseHours: number[], target: number): Result => {
+export const calculateExercise = (
+  exerciseHours: number[],
+  target: number
+): Result => {
   const periodLength = exerciseHours.length;
   const trainingDays = exerciseHours.filter((h) => h > 0).length;
   const totalHours = exerciseHours.reduce((h, history) => h + history, 0);
@@ -40,9 +43,11 @@ const calculateExercise = (exerciseHours: number[], target: number): Result => {
   };
 };
 
-const exerciseHours = process.argv
+//ACTIVAR LIÑA DE COMANDOS
+
+/* const exerciseHours = process.argv
   .slice(2, process.argv.length - 1)
   .map(Number);
 const target = Number(process.argv[process.argv.length - 1]);
 
-console.log(calculateExercise(exerciseHours, target));
+console.log(calculateExercise(exerciseHours, target)); */

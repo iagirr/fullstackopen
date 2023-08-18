@@ -14,7 +14,9 @@ export const calculateBMI = (alturaCm: number, pesoKg: number): string => {
   }
 };
 
-const alturaCm = Number(process.argv[2]);
+//ACTIVAR LIÑA DE COMANDOS
+
+/* const alturaCm = Number(process.argv[2]);
 const pesoKg = Number(process.argv[3]);
 
-console.log(calculateBMI(alturaCm, pesoKg));
+console.log(calculateBMI(alturaCm, pesoKg)); */
