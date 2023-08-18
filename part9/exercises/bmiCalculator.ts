@@ -1,4 +1,4 @@
-const calculateBMI = (alturaCm: number, pesoKg: number): string => {
+export const calculateBMI = (alturaCm: number, pesoKg: number): string => {
   const alturaM = alturaCm / 100;
   const bmi = pesoKg / alturaM ** 2;
   const bmiRedondeado = bmi.toFixed(2);
