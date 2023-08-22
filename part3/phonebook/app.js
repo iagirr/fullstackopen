@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 let persons = require('./phonebook');
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 morgan.token('postData', (req) => JSON.stringify(req.body));
 app.use(
